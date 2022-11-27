@@ -1,6 +1,7 @@
-from hardware.devices import Device
+from hardware.devices.device import Device
 from hardware.protocols import  Protocol
-from hardware.commands import Command, DEVICE_CMDS, create_command
+from hardware.commands import Command, DEVICE_CMDS
+from hardware.commands.device_commands import create_command
 
 from config import Settings
 
@@ -16,6 +17,3 @@ class DeviceManager:
         cmd:Command = create_command(cmd, self._device)
         return cmd.run(**params)
 
-
-class HardwareError(Exception):
-    pass

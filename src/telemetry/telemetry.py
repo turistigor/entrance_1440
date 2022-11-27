@@ -1,16 +1,23 @@
 from time import sleep
 from ctypes import Array
 
-from storages import IpcStorage
-from hardware import PowerSupply, Scpi, create_command, \
-    DEVICE_CMDS, GetData, HardwareError
+from storages.ipc_storage import IpcStorage
+from hardware.devices.power_supply import PowerSupply
+from hardware.protocols.scpi import Scpi 
+from hardware.commands.command import DEVICE_CMDS
+from hardware.commands.device_commands import GetData
+from hardware.error import HardwareError
+from hardware.commands.device_commands import create_command
 
 from config import Settings
 
 
 def write_log(file_d, data):
-    lines = (f'{ch},{params[0]},{params[1]},{params[2]}' for ch, params in data)
-    file_d.writelines(*lines)
+    lines = []
+    for ch, params in data.items():
+        line = f'{ch},{params[0]},{params[1]},{params[2]}\n'
+        lines.append(line)
+    file_d.writelines(lines)
 
 
 def run(shared_data:Array):

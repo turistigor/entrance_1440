@@ -1,7 +1,7 @@
 import socket
 from datetime import datetime
 
-from src.hardware.protocols.protocol import Protocol
+from hardware.protocols.protocol import Protocol
 
 
 class Scpi(Protocol):
@@ -12,7 +12,6 @@ class Scpi(Protocol):
         self._socket.connect((host, port))
 
     def __del__(self):
-        self._socket.shutdown(socket.SHUT_RDWR)
         self._socket.close()
         #FIXME: tmp
         print('Socket was closed')
@@ -30,11 +29,9 @@ class Scpi(Protocol):
         pass
 
     def get_channel_data(self, ch_num):
-        cmd = f':MEASure{ch_num}:ALL?\n'
+        cmd = f':MEASure{ch_num}:ALL?'
         self._socket.sendall(cmd.encode('utf8'))
-        data = str(self._socket.recv(32))
+        data = self._socket.recv(32)
 
-        current, voltage, __ = data.split(self._delimiter)
-        return (current, voltage, datetime.utcnow().isoformat())
-
-
+        current, voltage, __ = data.decode().split(self._delimiter)
+        return (float(current), float(voltage), datetime.utcnow().isoformat())

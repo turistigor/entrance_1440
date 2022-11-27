@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from hardware import HardwareError
+from hardware.error import HardwareError
 
 
 class Device(ABC):
@@ -13,7 +13,7 @@ class Device(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def _get_data(self, *args, **kwargs) -> dict:
+    def get_data(self, *args, **kwargs) -> dict:
         raise NotImplementedError()
 
 

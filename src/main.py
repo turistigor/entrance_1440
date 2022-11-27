@@ -2,8 +2,7 @@ from multiprocessing import Process
 from multiprocessing.sharedctypes import Array
 
 import telemetry
-from storages import IpcChannel
-from config import Settings
+from storages.ipc_storage import IpcChannel
 
 
 if __name__ == '__main__':
