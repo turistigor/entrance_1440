@@ -13,10 +13,7 @@ from config import Settings
 
 
 def write_log(file_d, data):
-    lines = []
-    for ch, params in data.items():
-        line = f'{ch},{params[0]},{params[1]},{params[2]}\n'
-        lines.append(line)
+    lines = (f'{ch},{params[0]},{params[1]},{params[2]}\n' for ch, params in data.items())
     file_d.writelines(lines)
 
 

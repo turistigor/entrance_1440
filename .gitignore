@@ -12,6 +12,5 @@ ENV/
 env.bak/
 venv.bak/
 
-
 docs/questions.txt
 *.log
