@@ -1,7 +1,7 @@
 import socket
 from datetime import datetime
 
-from hardware.protocols.protocol import Protocol
+from hardware.protocols.protocol import Protocol, ProtocolError
 
 
 class Scpi(Protocol):
@@ -32,6 +32,9 @@ class Scpi(Protocol):
         cmd = f':MEASure{ch_num}:ALL?'
         self._socket.sendall(cmd.encode('utf8'))
         data = self._socket.recv(32)
+
+        if not data:
+            raise ProtocolError('Connection is closed by device')
 
         current, voltage, __ = data.decode().split(self._delimiter)
         return (float(current), float(voltage), datetime.utcnow().isoformat())

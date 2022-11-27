@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from hardware.error import HardwareError
+
 
 class Protocol(ABC):
     @abstractmethod
@@ -21,4 +23,8 @@ class Protocol(ABC):
     @abstractmethod
     def get_channel_data(self, ch_num):
         raise NotImplementedError()
+
+
+class ProtocolError(HardwareError):
+    pass
 
