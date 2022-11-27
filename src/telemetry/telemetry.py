@@ -32,17 +32,15 @@ def run(shared_data:Array):
     device = PowerSupply(protocol)
     cmd:GetData = create_command(DEVICE_CMDS.GET_DATA, device)
 
-    while True:
-        log_start = datetime.now()
-        
-        with open(Settings.TELEMETRY_LOG, 'wt') as f:
-            while not is_log_overflow(log_start):
-                try:
+    try:
+        while True:
+            log_start = datetime.now()
+            
+            with open(Settings.TELEMETRY_LOG, 'wt') as f:
+                while not is_log_overflow(log_start):
                     device_data = cmd.run(storage)
-                except HardwareError as err:
-                    #FIXME: tmp
-                    print(err)
-                    break
-
-                write_log(f, device_data)
-                sleep(Settings.TELEMETRY_DELAY_SEC)
+                    write_log(f, device_data)
+                    sleep(Settings.TELEMETRY_DELAY_SEC)
+    except HardwareError as err:
+        #FIXME: tmp
+        print(err)

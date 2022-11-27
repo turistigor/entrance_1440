@@ -11,6 +11,6 @@ if __name__ == '__main__':
         DeviceIpcData,
     )
     telemetry_process = Process(name='telemetry', target=telemetry.run, args=args)
-    telemetry_process.run()
+    telemetry_process.start()
 
     telemetry_process.join()
