@@ -1,3 +1,4 @@
+from time import sleep
 import socket
 
 from config.settings import Settings
@@ -31,11 +32,14 @@ if __name__ == '__main__':
         s.bind((Settings.DEVICE_HOST, Settings.DEVICE_PORT))
         s.listen()
 
-        try:
-            conn, addr = s.accept()
-            while True:
+        while True:
+            try:
+                conn, addr = s.accept()
                 command = conn.recv(32)
-                answer = process_command(command.decode())
-                conn.sendall(answer.encode())
-        finally:
-            conn.close()
+                while command:
+                    answer = process_command(command.decode())
+                    conn.sendall(answer.encode())
+
+                    command = conn.recv(32)
+            finally:
+                conn.close()
