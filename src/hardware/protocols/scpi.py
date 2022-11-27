@@ -1,6 +1,6 @@
 import socket
 
-from devices.protocol import Protocol
+from src.hardware.protocols.protocol import Protocol
 
 
 class Scpi(Protocol):
@@ -12,6 +12,8 @@ class Scpi(Protocol):
     def __del__(self):
         self._socket.shutdown(socket.SHUT_RDWR)
         self._socket.close()
+        #FIXME: tmp
+        print('Socket was closed')
 
     @staticmethod
     def set_current(ch_num, current):
