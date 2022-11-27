@@ -13,13 +13,15 @@ def write_log(file_d, data):
     file_d.writelines(*lines)
 
 
-def run(shared_data:Array, delay_sec:int, log_file:str):
+def run(shared_data:Array):
     storage = IpcStorage(shared_data)
-    protocol = Scpi(Settings.DEVICE_HOST, Settings.DEVICE_PORT)
+    protocol = Scpi(
+        Settings.DEVICE_HOST, Settings.DEVICE_PORT, Settings.SCPI_DELIMITER
+    )
     device = PowerSupply(protocol)
     cmd:GetData = create_command(DEVICE_CMDS.GET_DATA, device)
 
-    with open(log_file,'wt') as f:
+    with open(Settings.TELEMETRY_LOG,'wt') as f:
         while True:
             try:
                 device_data = cmd.run(storage)
@@ -28,4 +30,4 @@ def run(shared_data:Array, delay_sec:int, log_file:str):
                 print(err)
 
             write_log(f, device_data)
-            sleep(delay_sec)
+            sleep(Settings.TELEMETRY_DELAY)
