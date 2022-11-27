@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from hardware import HardwareError
+from hardware.error import HardwareError
 
 
 class Storage(ABC):

@@ -1,4 +1,5 @@
-from hardware import Device, DeviceError, Protocol
+from hardware.devices.device import Device, DeviceError 
+from hardware.protocols.protocol import Protocol
 
 
 class PowerSupply(Device):
@@ -45,6 +46,6 @@ class PowerSupply(Device):
     def get_data(self) -> dict:
         res = {}
         for cn_num in range(self.CHANNEL_NUM_MIN, self.CHANNEL_NUM_MAX+1):
-            res[cn_num] = self.protocol.get_channel_data(cn_num)
+            res[cn_num] = self._protocol.get_channel_data(cn_num)
 
         return res

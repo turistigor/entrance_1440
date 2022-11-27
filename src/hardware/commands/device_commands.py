@@ -1,7 +1,8 @@
 from typing import Optional
 
-from hardware import Command, Device
-from storages import Storage
+from hardware.commands.command import Command, DEVICE_CMDS, CommandError
+from hardware.devices.device import Device
+from storages.storage import Storage
 
 
 class BaseCommand:
@@ -21,7 +22,17 @@ class ChannelOff(BaseCommand, Command):
 
 class GetData(BaseCommand, Command):
     def run(self, storage:Optional[Storage]):
-        data = self._device._get_data()
+        data = self._device.get_data()
         storage.set(data)
 
         return data
+
+
+def create_command(cmd_type:DEVICE_CMDS, device:Device):
+    if cmd_type == DEVICE_CMDS.CHANNEL_ON:
+        return ChannelOn(device)
+    elif cmd_type == DEVICE_CMDS.CHANNEL_OFF:
+        return ChannelOff(device)
+    elif cmd_type == DEVICE_CMDS.GET_DATA:
+        return GetData(device)
+    raise CommandError(f'Command {cmd_type.value} is not supported now')

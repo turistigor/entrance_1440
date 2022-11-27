@@ -1,7 +1,7 @@
 from ctypes import Structure, c_char_p, c_ushort, c_float
 from ctypes import Array
 
-from storages import Storage, StorageError
+from storages.storage import Storage, StorageError
 
 
 class IpcChannel(Structure):
@@ -10,11 +10,8 @@ class IpcChannel(Structure):
 
 class IpcStorage(Storage):
     def __init__(self, shared_data: Array):
-        if not shared_data or not isinstance(shared_data, Array):
+        if not shared_data:
             raise StorageError('Unexpected IPC data structure')
-
-        if any(shared_data, lambda ch: isinstance(ch, IpcChannel)):
-            raise StorageError('Unexpected IPC channel structure')
 
         self._shared_data = shared_data
 
@@ -22,7 +19,7 @@ class IpcStorage(Storage):
         for ch_num, channel in data.items():
             self._shared_data[ch_num - 1].current = channel[0]
             self._shared_data[ch_num - 1].voltage = channel[1]
-            self._shared_data[ch_num - 1].update_dt = channel[2]
+            self._shared_data[ch_num - 1].update_dt = channel[2].encode()
 
     def get(self):
         return {
