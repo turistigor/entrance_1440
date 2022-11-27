@@ -1,10 +1,12 @@
 import socket
+from datetime import datetime
 
 from src.hardware.protocols.protocol import Protocol
 
 
 class Scpi(Protocol):
-    def __init__(self, host:str, port: int):
+    def __init__(self, host:str, port: int, delimiter:str):
+        self._delimiter = delimiter
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self._socket.connect((host, port))
@@ -15,22 +17,24 @@ class Scpi(Protocol):
         #FIXME: tmp
         print('Socket was closed')
 
-    @staticmethod
-    def set_current(ch_num, current):
+    def set_current(self, ch_num, current):
         pass
 
-    @staticmethod
-    def set_voltage(ch_num, voltage):
+    def set_voltage(self, ch_num, voltage):
         pass
 
-    @staticmethod
-    def channel_on(ch_num):
+    def channel_on(self, ch_num):
         pass
 
-    @staticmethod
-    def channel_off(ch_num):
+    def channel_off(self, ch_num):
         pass
 
-    @staticmethod
-    def get_channel_data(ch_num):
-        pass
+    def get_channel_data(self, ch_num):
+        cmd = f':MEASure{ch_num}:ALL?\n'
+        self._socket.sendall(cmd.encode('utf8'))
+        data = str(self._socket.recv(32))
+
+        current, voltage, __ = data.split(self._delimiter)
+        return (current, voltage, datetime.utcnow().isoformat())
+
+
