@@ -1,8 +1,8 @@
 from typing import Optional
 
-from hardware.commands.command import Command, DEVICE_CMDS, CommandError
-from hardware.devices.device import Device
-from storages.storage import Storage
+from src.hardware.commands.command import Command, DEVICE_CMDS, CommandError
+from src.hardware.devices.device import Device
+from src.storages.storage import Storage
 
 
 class BaseCommand:

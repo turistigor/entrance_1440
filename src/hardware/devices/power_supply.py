@@ -1,5 +1,5 @@
-from hardware.devices.device import Device, DeviceError 
-from hardware.protocols.protocol import Protocol
+from src.hardware.devices.device import Device, DeviceError 
+from src.hardware.protocols.protocol import Protocol
 
 
 class PowerSupply(Device):

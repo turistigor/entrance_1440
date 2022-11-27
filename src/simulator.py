@@ -1,7 +1,6 @@
-from time import sleep
 import socket
 
-from config.settings import Settings
+from src.config.settings import Settings
 
 
 class SimulatorException(Exception):

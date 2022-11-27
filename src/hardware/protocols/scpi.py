@@ -1,7 +1,7 @@
 import socket
 from datetime import datetime
 
-from hardware.protocols.protocol import Protocol, ProtocolError
+from src.hardware.protocols.protocol import Protocol, ProtocolError
 
 
 class Scpi(Protocol):

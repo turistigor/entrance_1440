@@ -8,3 +8,6 @@ class Settings:
 
     SCPI_DELIMITER = '\n'
 
+    HTTP_API_SERVER='127.0.0.1'
+    HTTP_API_PORT=8001
+

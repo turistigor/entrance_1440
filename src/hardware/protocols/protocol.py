@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from hardware.error import HardwareError
+from src.hardware.error import HardwareError
 
 
 class Protocol(ABC):
