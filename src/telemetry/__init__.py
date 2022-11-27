@@ -1,4 +1,4 @@
-from telemetry.telemetry import run
+from src.telemetry.telemetry import run
 
 
 __all__ = (

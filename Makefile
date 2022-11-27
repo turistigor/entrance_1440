@@ -1,5 +1,8 @@
 all:
-	python3 src/main.py
+	poetry run python main.py
+
+sim:
+	poetry run python3 src/simulator.py
 
 test:
-	python3 src/simulator.py
+	poetry run python -m pytest -s tests

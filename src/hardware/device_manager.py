@@ -1,7 +1,7 @@
-from hardware.devices.device import Device
-from hardware.protocols import  Protocol
-from hardware.commands import Command, DEVICE_CMDS
-from hardware.commands.device_commands import create_command
+from src.hardware.devices.device import Device
+from src.hardware.protocols import  Protocol
+from src.hardware.commands import Command, DEVICE_CMDS
+from src.hardware.commands.device_commands import create_command
 
 from config import Settings
 

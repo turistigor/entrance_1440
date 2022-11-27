@@ -1,7 +1,7 @@
 from ctypes import Structure, c_char_p, c_ushort, c_float
 from ctypes import Array
 
-from storages.storage import Storage, StorageError
+from src.storages.storage import Storage, StorageError
 
 
 class IpcChannel(Structure):
