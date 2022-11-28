@@ -8,7 +8,7 @@ import src.telemetry
 from src.storages.ipc_storage import IpcChannel
 from src.config import Settings
 
-from src.api.endpoints import api_router
+from src.api.endpoints.endpoints import api_router
 
 
 def get_fastapi_app():
@@ -19,6 +19,7 @@ def get_fastapi_app():
         version='0.1.0'
     )
     fastapi_app.include_router(api_router)
+    return fastapi_app
 
 fastapi_app = get_fastapi_app()
 
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     telemetry_process.start()
 
     uvicorn.run(
-        '__main__:fastapi_app',
+        'main:fastapi_app',
         host=Settings.HTTP_API_SERVER,
         port=Settings.HTTP_API_PORT,
         reload=True,

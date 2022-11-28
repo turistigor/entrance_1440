@@ -4,8 +4,9 @@ from src.config.settings import Settings
 
 class TestEndpoints:
     def get_url(self):
-        return f'{Settings.DEVICE_HOST}:{Settings.DEVICE_PORT}'
+        return f'https://{Settings.DEVICE_HOST}:{Settings.DEVICE_PORT}'
 
-    async def test_get_data(self, client):
-        resp = await client.get(self.get_url() + '/getdata')
-        assert resp.status == status.HTTP_200_OK
+    async def test_get_data(self, api_client):
+        url = self.get_url() + '/getdata'
+        resp = await api_client.get(url)
+        assert resp.status_code == status.HTTP_200_OK
