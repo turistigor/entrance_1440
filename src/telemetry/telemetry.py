@@ -1,6 +1,6 @@
 from time import sleep
 from datetime import datetime
-from ctypes import Array
+from multiprocessing.sharedctypes import Array
 
 from src.storages.ipc_storage import IpcStorage
 from src.hardware.devices.power_supply import PowerSupply
@@ -10,7 +10,7 @@ from src.hardware.commands.device_commands import GetData
 from src.hardware.error import HardwareError
 from src.hardware.commands.device_commands import create_command
 
-from src.config import Settings
+from src.config.settings import Settings
 
 
 def write_log(file_d, data):
