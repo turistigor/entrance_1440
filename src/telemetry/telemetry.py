@@ -42,5 +42,4 @@ def run(shared_data:Array):
                     write_log(f, device_data)
                     sleep(Settings.TELEMETRY_DELAY_SEC)
     except HardwareError as err:
-        #FIXME: tmp
         print(err)

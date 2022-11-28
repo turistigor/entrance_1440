@@ -13,24 +13,26 @@ class Scpi(Protocol):
 
     def __del__(self):
         self._socket.close()
-        #FIXME: tmp
-        print('Socket was closed')
 
     def set_current(self, ch_num, current):
-        pass
+        cmd = f':SOURce{ch_num}:CURRent {current}'
+        self._socket.sendall(cmd.encode())
 
     def set_voltage(self, ch_num, voltage):
-        pass
+        cmd = f':SOURce{ch_num}:VOLTage {voltage}'
+        self._socket.sendall(cmd.encode())
 
     def channel_on(self, ch_num):
-        pass
+        cmd = f':OUTPut{ch_num} ON'
+        self._socket.sendall(cmd.encode())
 
     def channel_off(self, ch_num):
-        pass
+        cmd = f':OUTPut{ch_num} OFF'
+        self._socket.sendall(cmd.encode())
 
     def get_channel_data(self, ch_num):
         cmd = f':MEASure{ch_num}:ALL?'
-        self._socket.sendall(cmd.encode('utf8'))
+        self._socket.sendall(cmd.encode())
         data = self._socket.recv(32)
 
         if not data:
