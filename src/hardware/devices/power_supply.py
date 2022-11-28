@@ -1,3 +1,5 @@
+from time import sleep
+
 from src.hardware.devices.device import Device, DeviceError 
 from src.hardware.protocols.protocol import Protocol
 
@@ -16,19 +18,19 @@ class PowerSupply(Device):
         self._protocol = protocol
 
     @classmethod
-    def _check_channel_num(cls, ch_num):
+    def _check_channel_num(cls, ch_num:float):
         if ch_num < cls.CHANNEL_NUM_MIN or ch_num > cls.CHANNEL_NUM_MAX:
             raise DeviceError(f'Forbiden channel number {ch_num}')
 
     @classmethod
-    def _check_current(cls, current):
+    def _check_current(cls, current:float):
         if current < cls.CURRENT_MIN or current > cls.CURRENT_MAX:
             raise DeviceError(f'Forbiden current value {current}')
 
     @classmethod
     def _check_voltage(cls, current):
-        if current < cls.VOLTAGE_MIN or current > cls.VOLTAGE_MIN:
-            raise DeviceError(f'Forbiden current value {current}')
+        if current < cls.VOLTAGE_MIN or current > cls.VOLTAGE_MAX:
+            raise DeviceError(f'Forbiden voltage value {current}')
 
     def channel_on(self, ch_num:int, current:float, voltage: float):
         self._check_channel_num(ch_num)
@@ -36,7 +38,9 @@ class PowerSupply(Device):
         self._check_voltage(voltage)
 
         self._protocol.set_current(ch_num, current)
+        sleep(0.1)
         self._protocol.set_voltage(ch_num, voltage)
+        sleep(0.1)
         self._protocol.channel_on(ch_num)
 
     def channel_off(self, ch_num:int):
