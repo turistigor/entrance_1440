@@ -1,6 +1,6 @@
 import socket
 
-from src.config.settings import Settings
+from config.settings import Settings
 
 
 class SimulatorException(Exception):

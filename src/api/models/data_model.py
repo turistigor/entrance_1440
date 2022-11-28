@@ -4,10 +4,10 @@ from pydantic import BaseModel
 
 
 class ChannelModel(BaseModel):
-    number: int
+    num: int
     current: float
     voltage: float
-    dt_update: str
+    update_dt: str
 
 
 class DataModel(BaseModel):
